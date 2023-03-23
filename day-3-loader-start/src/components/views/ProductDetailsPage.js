@@ -2,11 +2,16 @@ import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchProductById} from '../../store/modules/productsSlice';
+import { AddProductToCart } from '../../store/sharedModules/cartSlice';
+
+
 
 const ProductDetailsPage = () => {
     const dispatch = useDispatch(); // Help you to dispatch actions, Example: dispatch(fetchProduct(id))
-    const {singleProduct} = useSelector(state => state.products); // GETS YOU THE PRODUCTS FROM THE STORE
+    const {singleProduct, isError} = useSelector(state => state.products); // GETS YOU THE PRODUCTS FROM THE STORE
     let {id} = useParams();
+
+
 
     useEffect(() => {
         if (id) { //  id exists before calling fetchProduct is necessary to prevent errors.
@@ -16,10 +21,10 @@ const ProductDetailsPage = () => {
 
     return (
         <>
-            {singleProduct && 
-            <div className=''>
-                <img className='shadow-md' src={singleProduct.images[0]}></img>
-                <div className='m-8 mt-12'>
+            {singleProduct && !isError && 
+            <div className='m-auto md:w-1/2 lg:w-2/3 lg:flex lg:flex-row lg:justify-between lg:gap-12'>
+                <img className='shadow-md m-auto' src={singleProduct.images[0]}></img>
+                <div className='m-8 mt-12 lg:w-full'>
                     <div className='flex flex-row justify-between items-center mb-6'>
                             <h1 className='text-2xl'>{singleProduct.title}</h1>
                             <p className='text-gray-500'>{singleProduct.brand}</p>
@@ -37,12 +42,11 @@ const ProductDetailsPage = () => {
                     <hr className='my-8'></hr>
                     <div className='flex flex-row justify-between items-center mt-12 rounded-md'>
                         <p className='text-2xl'>{singleProduct.price} NOK</p>
-                        <button className='w-1/2 bg-indigo-600 text-white h-12 font-semibold rounded-md'>Add to cart</button>
+                        <button onClick={() => dispatch(AddProductToCart(singleProduct))} className='w-1/2 bg-indigo-600 text-white h-12 font-semibold rounded-md'>Add to cart</button>
                     </div>
                 </div>
-             
             </div>}
-             
+            {isError && <p>Upsi</p>}
         </>
     );
 };

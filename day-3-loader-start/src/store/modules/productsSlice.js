@@ -10,6 +10,7 @@ const productsSlice = createSlice({
     initialState: { // Here is the initial state // = data
         products: [], // e.g
         singleProduct: null,
+        isError: false
     },
     reducers: { // Here are the functions which amend the state // mutations for state
         SET_PRODUCTS: (state, action) => { // e.g
@@ -19,17 +20,22 @@ const productsSlice = createSlice({
         SET_SINGLE_PRODUCT: (state, action) => {
             console.log("SET_SINGLE_PRODUCT: action.payload", action.payload)
             state.singleProduct = action.payload;
+        },
+        SET_ERROR: (state, action) => {
+            state.isError = action.payload
         }
     },
 });
 export default productsSlice.reducer // hvorfor eksporterer vi? måvi bruke den et annet sted, eller kan vi fjerne den siden vi har alt i samme fil her, eller er den indirekte tilgejngelig nå uten at vi kaller på den med reducer?
 //konsoll gir generell function (state, action) {..build reactor ting
 // tror det er en generell export for liksom "generell reducer" funksjon. Vi bruker/kaller aldri på reducer, vi bruker dispatch med action type og da er det reduceren som sjekker og utfører. Men vi gjør reducer funksjonen tilgjengelig med denne exporten
+// DET ER FOR Å SENDE DEN TIL reducerene I INDEX.JS <3 <3 <3 <3
 
 // Actions // api calls etc
 const {SET_PRODUCTS} = productsSlice.actions
 console.log(productsSlice)
 const {SET_SINGLE_PRODUCT} = productsSlice.actions
+const {SET_ERROR} = productsSlice.actions
 
 
 // Fetch multiple products
@@ -53,8 +59,9 @@ export const fetchProducts = () => async dispatch => {
 // Fetch single product
 export const fetchProductById = (id) => async dispatch => {
     dispatch (setLoadingState(true))
+    let response;
     try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
+         response = await fetch(`https://dummyjson.com/products/${id}`);
         const data = await response.json();
         console.log("Single Product Data: ", data);
         // dispatch an action with the retrieved data
@@ -64,6 +71,17 @@ export const fetchProductById = (id) => async dispatch => {
         // handle any errors that occur during the fetch
         return console.error(e.message);
     }
+    if (response.ok) {
+        dispatch(handleErrorResponse(false))
+    }
+    else {
+        dispatch(handleErrorResponse(true))
+    }
+}
+
+export const handleErrorResponse = (responseStatus) => dispatch => {
+    dispatch (SET_ERROR(responseStatus))
+
 }
 
 

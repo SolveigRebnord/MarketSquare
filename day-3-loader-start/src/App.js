@@ -1,5 +1,6 @@
 import Loader from "./components/shared/Loader";
 import Router from "./routes/Router"
+import Header from "./components/shared/Header"
 import { useSelector } from "react-redux";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
 
     return (
         <>
-            <Router/>
+            <Header/>
+            <Router />
             {isLoading && <Loader/>}
         </>
     );

@@ -43,7 +43,7 @@ export const fetchProducts = () => async dispatch => {
     dispatch (setLoadingState(true))
     try {
         // const res = await api.post('/api/auth/login/', { username, password })
-        const response = await fetch('https://dummyjson.com/products');
+        const response = await fetch('https://dummyjson.com/products?limit=100');
         const data = await response.json();
         console.log(data);
 

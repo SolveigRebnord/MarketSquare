@@ -10,7 +10,7 @@ function App() {
     return (
         <>
             <Header/>
-            <Router />
+            <Router/>
             {isLoading && <Loader/>}
         </>
     );

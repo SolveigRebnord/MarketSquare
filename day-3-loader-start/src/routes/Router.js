@@ -17,7 +17,6 @@ function Router() {
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path="/contactus" element={<ContactUsPage/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
-
             </Routes>
         </>
     );

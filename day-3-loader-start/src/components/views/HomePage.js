@@ -27,6 +27,7 @@ function HomePage() {
                                         src={product.thumbnail}
                                         alt={product.title}
                                         className="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                        loading='lazy'
                                     />
                                 </div>
                                 <div className="mt-4 flex justify-between">

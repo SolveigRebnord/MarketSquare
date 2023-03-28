@@ -16,10 +16,12 @@ const productsSlice = createSlice({
         SET_PRODUCTS: (state, action) => { // e.g
             console.log("SET_PRODUCTS: action.payload", action.payload)
             state.products = action.payload; // vi setter state.hvaDetEr for å bruke det i utlistingen og useSelector. Der sier vi at state => state.hvaDetEr
+
         },
         SET_SINGLE_PRODUCT: (state, action) => {
             console.log("SET_SINGLE_PRODUCT: action.payload", action.payload)
             state.singleProduct = action.payload;
+            
         },
         SET_ERROR: (state, action) => {
             state.isError = action.payload

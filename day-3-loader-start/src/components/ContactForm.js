@@ -56,6 +56,7 @@ const validationSchema = yup.object({
         ),
     email: yup.string().email()
         .required('Email is required')
+        .mi
 })
 
 const ContactForm = () => {
